@@ -31,15 +31,15 @@ jobs:
           version-fragment: "bug"
       - name: New version
         run: echo ${{ steps.bump_version.outputs.next-version }}
-        - name: Remove existing version file
+      - name: Remove existing version file
         uses: JesseTG/rm@v1.0.0
         with:
-          path: './hellodocker/VERSION'
+          path: "./hellodocker/VERSION"
       - name: Write new version
         uses: christian-draeger/write-properties@1.0.0
         with:
-          path: './hellodocker/VERSION'
-          property: 'version'
+          path: "./hellodocker/VERSION"
+          property: "version"
           value: ${{ steps.bump_version.outputs.next-version }}
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag ${{ steps.bump_version.outputs.next-version }}
@@ -47,7 +47,7 @@ jobs:
         uses: matheusalbino/git-commit@v1.0.1
         with:
           github-token: ${{ secrets.TOKEN }}
-          message: 'Updated version to ${{ steps.bump_version.outputs.next-version }}'
+          message: "Updated version to ${{ steps.bump_version.outputs.next-version }}"
   cd:
     runs-on: ubuntu-latest
     needs: ci
