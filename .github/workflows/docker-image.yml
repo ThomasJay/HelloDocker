@@ -25,16 +25,14 @@ jobs:
         run: echo ${{ steps.read_property.outputs.value }}
       - name: Bump release version
         id: bump_version
-        uses: christian-draeger/increment-semantic-version@1.0.0
+        uses: christian-draeger/increment-semantic-version@1.0.1
         with:
           current-version: ${{ steps.read_property.outputs.value }}
           version-fragment: "bug"
       - name: New version
         run: echo ${{ steps.bump_version.outputs.next-version }}
-
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
-
   cd:
     runs-on: ubuntu-latest
     needs: ci
